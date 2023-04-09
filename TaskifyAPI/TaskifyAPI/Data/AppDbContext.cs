@@ -17,6 +17,7 @@ namespace TaskifyAPI.Data
         public DbSet<User> Users { get; set; }
 
         public DbSet<UserProject> UserProjects { get; set; }
+        /*
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,7 @@ namespace TaskifyAPI.Data
             .WithMany(ab => ab.UserProjects)
             .HasForeignKey(ab => ab.ProjectId);
         }
+        */
 
     }
 }

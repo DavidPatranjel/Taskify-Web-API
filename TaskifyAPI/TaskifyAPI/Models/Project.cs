@@ -19,10 +19,11 @@ namespace TaskifyAPI.Models
         /*Persoana care creaza proiectul*/
         public int? UserId { get; set; } 
 
+        /*
         public virtual User? User { get; set; }
-
 
         public virtual ICollection<Task>? Tasks { get; set; }
         public virtual ICollection<UserProject>? UserProjects { get; set; }
+        */
     }
 }

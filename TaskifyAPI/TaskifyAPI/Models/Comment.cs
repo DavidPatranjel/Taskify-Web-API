@@ -15,11 +15,13 @@ namespace TaskifyAPI.Models
 
         public int? TaskId { get; set; }
 
-        public virtual Task? Task { get; set; }
+        /// <summary>
+        /// public virtual Task? Task { get; set; }
+        /// </summary>
 
         /*Persoana care comenteaza*/
         public int? UserId { get; set; } 
 
-        public virtual User? User { get; set; }
+        ///public virtual User? User { get; set; }
     }
 }

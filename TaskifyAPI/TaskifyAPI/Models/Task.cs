@@ -22,14 +22,17 @@ namespace TaskifyAPI.Models
         /*Persoana care creaza taskul*/
         public int? UserId { get; set; }
 
-        public virtual User? User { get; set; }
+        /// <summary>
+        /// public virtual User? User { get; set; }
+        /// </summary>
 
 
         public int? ProjectId { get; set; }
 
-        public virtual Project? Project { get; set; }
-        public virtual ICollection<Comment>? Comments { get; set; }
+        ///public virtual Project? Project { get; set; }
+        ///public virtual ICollection<Comment>? Comments { get; set; }
+        /*
         [NotMapped]
-        public IEnumerable<SelectListItem>? Statuses { get; set; }
+        public IEnumerable<SelectListItem>? Statuses { get; set; }*/
     }
 }
