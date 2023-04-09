@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using TaskifyAPI.Models.DTOs;
 
-namespace TaskifyAPI.Models
+namespace TaskifyAPI.Models.Entities
 {
     public class Task
     {
@@ -13,26 +14,32 @@ namespace TaskifyAPI.Models
         [Required(ErrorMessage = "Please insert the description of this task")]
         [StringLength(200, ErrorMessage = "The task description must have at most 200 characters")]
         public string Description { get; set; }
-        public string Status { get; set; } /*Not Started, In Progress, Completed*/
+        public TaskStatus Status { get; set; } /*Not Started, In Progress, Completed*/
 
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        /*Persoana care creaza taskul*/
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
-        /// <summary>
-        /// public virtual User? User { get; set; }
-        /// </summary>
+        public int ProjectId { get; set; }
 
+        public enum TaskStatus
+        {
+            NotStarted,
+            InProgress,
+            Completed
+        }
 
-        public int? ProjectId { get; set; }
+        public Task(TaskDTO tdto)
+        {
+            Title = tdto.Title;
+            Description = tdto.Description;
+            Status = (TaskStatus)tdto.Status;
+            StartDate = tdto.StartDate;
+            EndDate = tdto.EndDate;
+        }
 
-        ///public virtual Project? Project { get; set; }
-        ///public virtual ICollection<Comment>? Comments { get; set; }
-        /*
-        [NotMapped]
-        public IEnumerable<SelectListItem>? Statuses { get; set; }*/
+        public Task() { }
     }
 }

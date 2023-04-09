@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Data;
-using TaskifyAPI.Models;
+using TaskifyAPI.Models.DTOs;
+using TaskifyAPI.Models.Entities;
 
 namespace TaskifyAPI.Controllers
 {
@@ -23,9 +24,10 @@ namespace TaskifyAPI.Controllers
         }
 
         [HttpPost(Name = "AddProject")]
-        public async Task<IActionResult> AddProject(Project addProjectRequest)
+        public async Task<IActionResult> AddProject(ProjectDTO addProjectRequest)
         {
-            await db.Projects.AddAsync(addProjectRequest);
+            Project p = new Project(addProjectRequest);
+            await db.Projects.AddAsync(p);
             await db.SaveChangesAsync();
             return Ok(addProjectRequest);
         }

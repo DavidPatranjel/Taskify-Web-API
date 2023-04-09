@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Data;
-using TaskifyAPI.Models;
+using TaskifyAPI.Models.DTOs;
+using TaskifyAPI.Models.Entities;
 
 namespace TaskifyAPI.Controllers
 {
@@ -23,9 +24,10 @@ namespace TaskifyAPI.Controllers
         }
 
         [HttpPost(Name = "AddComments")]
-        public async Task<IActionResult> AddComments(Comment addCommentRequest)
+        public async Task<IActionResult> AddComments(CommentDTO addCommentRequest)
         {
-            await db.Comments.AddAsync(addCommentRequest);
+            Comment c = new Comment(addCommentRequest);
+            await db.Comments.AddAsync(c);
             await db.SaveChangesAsync();
             return Ok(addCommentRequest);
         }

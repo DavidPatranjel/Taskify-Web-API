@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TaskifyAPI.Models.DTOs;
 
-namespace TaskifyAPI.Models
+namespace TaskifyAPI.Models.Entities
 {
     public class Project
     {
@@ -14,16 +15,14 @@ namespace TaskifyAPI.Models
         [StringLength(200, ErrorMessage = "The project description must have at most 200 characters")]
         public string Description { get; set; }
 
+        public int UserId { get; set; }
+        public Project(ProjectDTO pdto)
+        {
+            Title = pdto.Title;
+            Description = pdto.Description;
+            UserId = pdto.UserId;
+        }
+        public Project() { }
 
-
-        /*Persoana care creaza proiectul*/
-        public int? UserId { get; set; } 
-
-        /*
-        public virtual User? User { get; set; }
-
-        public virtual ICollection<Task>? Tasks { get; set; }
-        public virtual ICollection<UserProject>? UserProjects { get; set; }
-        */
     }
 }
