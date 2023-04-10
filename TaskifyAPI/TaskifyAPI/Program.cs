@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using System;
 using TaskifyAPI.Data;
+using TaskifyAPI.Services.UnitOfWorkService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
                                     options.UseSqlServer(connectionString));
+builder.Services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();
 
 var app = builder.Build();
 

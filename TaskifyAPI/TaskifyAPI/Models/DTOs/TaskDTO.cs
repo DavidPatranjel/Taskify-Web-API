@@ -23,7 +23,9 @@ namespace TaskifyAPI.Models.DTOs
 
 
 
-        public int ProjectId { get; set; }
+        /// <summary>
+        /// public int ProjectId { get; set; }
+        /// </summary>
 
         public enum TaskStatus
         {
