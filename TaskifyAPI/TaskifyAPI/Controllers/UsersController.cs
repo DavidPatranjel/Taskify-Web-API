@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Data;
 using TaskifyAPI.Models.DTOs;
 using TaskifyAPI.Models.Entities;
-
+using TaskifyAPI.Services.UnitOfWorkService;
 
 namespace TaskifyAPI.Controllers
 {
@@ -11,26 +11,57 @@ namespace TaskifyAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly AppDbContext db;
-        public UsersController(AppDbContext context)
+        private readonly IUnitOfWorkService _unitOfWork;
+        private const string errorDbMessage = "DB Error: Cant find user with this id";
+
+        public UsersController(IUnitOfWorkService unitOfWork)
         {
-            db = context;
+            _unitOfWork = unitOfWork;
         }
 
-        [HttpGet(Name = "GetUser")]
+        [HttpGet]
         public async Task<IActionResult> GetUser()
         {
-            var users = db.Users.ToList();
+            var users = (await _unitOfWork.Users.GetAll()).Select(a => new ApplicationUserDTO(a)).ToList();
             return Ok(users);
         }
 
-        [HttpPost(Name = "AddUser")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApplicationUserDTO>> GetUser(int id)
+        {
+            var user = await _unitOfWork.Users.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound(errorDbMessage);
+            }
+
+            return new ApplicationUserDTO(user);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddUser(ApplicationUserDTO addUserRequest)
         {
             ApplicationUser au = new ApplicationUser(addUserRequest);
-            await db.Users.AddAsync(au);
-            await db.SaveChangesAsync();
+            await _unitOfWork.Users.Create(au);
+            _unitOfWork.Save();
             return Ok(addUserRequest);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _unitOfWork.Users.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound(errorDbMessage);
+            }
+
+            await _unitOfWork.Users.Delete(user);
+            _unitOfWork.Save();
+            return Ok(user);
+        }
+
     }
 }

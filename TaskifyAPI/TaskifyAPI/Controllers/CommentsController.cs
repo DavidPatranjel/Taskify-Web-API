@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Data;
 using TaskifyAPI.Models.DTOs;
 using TaskifyAPI.Models.Entities;
+using TaskifyAPI.Services.UnitOfWorkService;
 
 namespace TaskifyAPI.Controllers
 {
@@ -10,26 +11,57 @@ namespace TaskifyAPI.Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
-        private readonly AppDbContext db;
-        public CommentsController(AppDbContext context)
+        private readonly IUnitOfWorkService _unitOfWork;
+        private const string errorDbMessage = "DB Error: Cant find comment with this id";
+
+        public CommentsController(IUnitOfWorkService unitOfWork)
         {
-            db = context;
+            _unitOfWork = unitOfWork;
         }
 
-        [HttpGet(Name = "GetComments")]
+      
+        [HttpGet]
         public async Task<IActionResult> GetComments()
         {
-            var comms = db.Comments.ToList();
+            var comms = (await _unitOfWork.Comments.GetAll()).Select(a => new CommentDTO(a)).ToList();
             return Ok(comms);
         }
 
-        [HttpPost(Name = "AddComments")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CommentDTO>> GetComment(int id)
+        {
+            var comm = await _unitOfWork.Comments.GetById(id);
+
+            if (comm == null)
+            {
+                return NotFound(errorDbMessage);
+            }
+
+            return new CommentDTO(comm);
+        }
+
+        [HttpPost(Name = "AddComment")]
         public async Task<IActionResult> AddComments(CommentDTO addCommentRequest)
         {
             Comment c = new Comment(addCommentRequest);
-            await db.Comments.AddAsync(c);
-            await db.SaveChangesAsync();
+            await _unitOfWork.Comments.Create(c);
+            _unitOfWork.Save();
             return Ok(addCommentRequest);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comm = await _unitOfWork.Comments.GetById(id);
+
+            if (comm == null)
+            {
+                return NotFound(errorDbMessage);
+            }
+
+            await _unitOfWork.Comments.Delete(comm);
+            _unitOfWork.Save();
+            return Ok(comm);
         }
     }
 }
