@@ -18,7 +18,7 @@
 
 - [x] Swagger / Middlewares (and utils)
 
-- [] Auth/Register (Identity/JWT/Identity Server/ Oauth)
+- [x] Auth/Register (Identity/JWT/Identity Server/ Oauth)
 
 - [x] Net + Sql Server/Mysql
 
