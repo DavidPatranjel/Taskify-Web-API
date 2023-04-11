@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskifyAPI.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace TaskifyAPI.Data
 {
-    public class AppDbContext : IdentityDbContext<AppDbContext>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        public AppDbContext(DbContextOptions options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
         {
         }
@@ -19,11 +21,11 @@ namespace TaskifyAPI.Data
         public DbSet<UserProject> UserProjects { get; set; }
         
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
             // definire primary key compus
-            modelBuilder.Entity<UserProject>()
+            builder.Entity<UserProject>()
             .HasKey(ab => new {
                 ab.UserId,
                 ab.ProjectId
