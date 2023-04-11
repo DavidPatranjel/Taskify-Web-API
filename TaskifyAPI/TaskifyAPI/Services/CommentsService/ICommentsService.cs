@@ -5,5 +5,6 @@ namespace TaskifyAPI.Services.CommentsService
 {
     public interface ICommentsService : IGenericService<Comment>
     {
+        Task<List<Comment>> GetCommentsOfUser(string userid);
     }
 }

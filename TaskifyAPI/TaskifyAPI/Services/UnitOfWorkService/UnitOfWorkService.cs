@@ -22,6 +22,7 @@ namespace TaskifyAPI.Services.UnitOfWorkService
             Tasks = new TasksService.TasksService(this.db);
             Comments = new CommentsService.CommentsService(this.db);
             Users = new UsersService.UsersService(this.db);
+            UserProjects = new UserProjectService.UserProjectService(this.db);
             _roleManager = roleManager;
         }
         public ProjectsService.IProjectsService Projects { 
@@ -39,6 +40,11 @@ namespace TaskifyAPI.Services.UnitOfWorkService
             private set;
         }
         public UsersService.IUsersService Users
+        {
+            get;
+            private set;
+        }
+        public UserProjectService.IUserProjectService UserProjects
         {
             get;
             private set;

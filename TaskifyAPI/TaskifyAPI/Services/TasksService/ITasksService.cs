@@ -6,5 +6,6 @@ namespace TaskifyAPI.Services.TasksService
     public interface ITasksService : IGenericService<Models.Entities.Task>
     {
         Task<List<Models.Entities.Task>> GetTaskOfProject(int projid);
+        Task<List<Comment>> GetCommentsFromTask(int idtask);
     }
 }

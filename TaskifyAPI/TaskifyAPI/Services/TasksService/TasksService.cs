@@ -16,6 +16,9 @@ namespace TaskifyAPI.Services.TasksService
             return await _db.Tasks.Where(a => a.ProjectId == projid).ToListAsync();
         }
 
-
+        public async Task<List<Comment>> GetCommentsFromTask(int idtask)
+        {
+            return await _db.Comments.Where(a => a.TaskId == idtask).ToListAsync();
+        }
     }
 }
