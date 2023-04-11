@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using System;
 using TaskifyAPI.Data;
+using TaskifyAPI.Models.Entities;
 using TaskifyAPI.Services.UnitOfWorkService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,9 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
                                     options.UseSqlServer(connectionString));
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();
 
 var app = builder.Build();
