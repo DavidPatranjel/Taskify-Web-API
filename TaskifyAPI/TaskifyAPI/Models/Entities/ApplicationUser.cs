@@ -18,6 +18,13 @@ namespace TaskifyAPI.Models.Entities
             LastName = audto.LastName;
             Email = audto.Email;
         }
+        public ApplicationUser(AccountUserDTO accto)
+        {
+            FirstName = accto.FirstName;
+            LastName = accto.LastName;
+            Email = accto.Email;
+            PhoneNumber = accto.PhoneNumber;
+        }
         public ApplicationUser() { }
     }
 }

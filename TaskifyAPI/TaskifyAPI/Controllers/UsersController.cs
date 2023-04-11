@@ -38,7 +38,7 @@ namespace TaskifyAPI.Controllers
 
             return new ApplicationUserDTO(user);
         }
-
+        /*
         [HttpPost]
         public async Task<IActionResult> AddUser(ApplicationUserDTO addUserRequest)
         {
@@ -46,7 +46,7 @@ namespace TaskifyAPI.Controllers
             await _unitOfWork.Users.Create(au);
             _unitOfWork.Save();
             return Ok(addUserRequest);
-        }
+        }*/
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

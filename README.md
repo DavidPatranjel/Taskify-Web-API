@@ -1,9 +1,4 @@
-# Taskify-Web-API
-
-<h2 style = "text-indent: 50px;"> 
-<span style="color: #ed7966">Taskify (API)</span> este o platforma intuitiva de task management care te va ajuta sa devii mai productiv! 
-</h2>
-
+# Taskify (Web API)
 
 <h2 align = "center"> 
      <p>Un proiect realizat în cadrul SoftbinatorLabs2023 de:</p>
@@ -11,6 +6,10 @@
 </h2>
 <br>
 
+<h2 style = "text-indent: 50px;"> 
+<span style="color: #ed7966">Taskify (API)</span> este o platforma intuitiva de task management care te va ajuta sa devii mai productiv! 
+</h2>
+<br>
 
 ## Cerinte:
 - [x] Source code pe GIT

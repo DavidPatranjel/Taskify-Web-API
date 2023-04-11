@@ -24,6 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole> (options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddTransient<IUnitOfWorkService, UnitOfWorkService>();
+builder.Services.AddTransient<SeedData>();
 
 var app = builder.Build();
 
@@ -41,5 +42,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Run seeders
+using (var serviceScope = app.Services.CreateScope())
+{
+    var seeder = serviceScope.ServiceProvider.GetRequiredService<SeedData>();
+    seeder.Initialize();
+}
 
 app.Run();
