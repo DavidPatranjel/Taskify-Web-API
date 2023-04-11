@@ -11,16 +11,10 @@ namespace TaskifyAPI.Models.DTOs
 
         public DateTime Date { get; set; }
 
-        public int TaskId { get; set; }
-
-        public int UserId { get; set; }
-
         public CommentDTO(Comment comm)
         {
             Content = comm.Content;
             Date = comm.Date;
-            TaskId = comm.TaskId;
-            UserId = comm.UserId;
         }
         public CommentDTO() { }
 

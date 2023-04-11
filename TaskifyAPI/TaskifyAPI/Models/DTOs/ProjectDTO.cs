@@ -12,12 +12,10 @@ namespace TaskifyAPI.Models.DTOs
         [StringLength(200, ErrorMessage = "The project description must have at most 200 characters")]
         public string Description { get; set; }
 
-        public int UserId { get; set; } 
         public ProjectDTO(Project proj)
         {
             Title = proj.Title;
             Description = proj.Description;
-            UserId = proj.UserId;
         }
         public ProjectDTO() { }
     }

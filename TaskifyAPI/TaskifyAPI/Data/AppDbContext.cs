@@ -3,9 +3,9 @@ using TaskifyAPI.Models.Entities;
 
 namespace TaskifyAPI.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppDbContext>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public AppDbContext(DbContextOptions options)
         : base(options)
         {
         }

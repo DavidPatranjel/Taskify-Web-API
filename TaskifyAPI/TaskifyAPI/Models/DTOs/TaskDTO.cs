@@ -19,13 +19,6 @@ namespace TaskifyAPI.Models.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public int UserId { get; set; }
-
-
-
-        /// <summary>
-        /// public int ProjectId { get; set; }
-        /// </summary>
 
         public enum TaskStatus
         {
