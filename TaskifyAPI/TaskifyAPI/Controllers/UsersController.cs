@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskifyAPI.Data;
 using TaskifyAPI.Models.DTOs;
 using TaskifyAPI.Models.Entities;
@@ -14,11 +15,14 @@ namespace TaskifyAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUnitOfWorkService _unitOfWork;
+        private readonly ILogger<UsersController> _logger;
         private const string errorDbMessage = "DB Error: Cant find user with this id";
 
-        public UsersController(IUnitOfWorkService unitOfWork)
+        public UsersController(IUnitOfWorkService unitOfWork,
+                                 ILogger<UsersController> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -26,6 +30,7 @@ namespace TaskifyAPI.Controllers
 
         public async Task<IActionResult> GetUsers()
         {
+            _logger.LogDebug("Running getting all users (ADMIN ONLY)...");
             var users = (await _unitOfWork.Users.GetAll()).Select(a => new ApplicationUserDTO(a)).ToList();
             return Ok(users);
         }
@@ -34,10 +39,12 @@ namespace TaskifyAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ApplicationUserDTO>> GetUser(string id)
         {
+            _logger.LogDebug("Running getting a user (ADMIN ONLY)...");
             var user = await _unitOfWork.Users.GetById(id);
 
             if (user == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -48,15 +55,18 @@ namespace TaskifyAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
+            _logger.LogDebug("Running deleting a user (ADMIN ONLY)...");
             var user = await _unitOfWork.Users.GetById(id);
 
             if (user == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
             if (user.Id == _unitOfWork.getUserManager().GetUserId(User))
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
 
