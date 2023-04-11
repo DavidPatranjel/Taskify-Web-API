@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Data;
 using TaskifyAPI.Models.DTOs;
@@ -43,6 +44,8 @@ namespace TaskifyAPI.Controllers
         public async Task<IActionResult> AddProject(ProjectDTO addProjectRequest)
         {
             Project p = new Project(addProjectRequest);
+            var user_id = _unitOfWork.getUserManager().GetUserId(User);
+            p.UserId = user_id;
             await _unitOfWork.Projects.Create(p);
             _unitOfWork.Save();
             return Ok(addProjectRequest);

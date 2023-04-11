@@ -1,4 +1,6 @@
-﻿using TaskifyAPI.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using TaskifyAPI.Data;
+using TaskifyAPI.Models.Entities;
 using TaskifyAPI.Services;
 
 namespace TaskifyAPI.Services.UnitOfWorkService
@@ -6,13 +8,21 @@ namespace TaskifyAPI.Services.UnitOfWorkService
     public class UnitOfWorkService : IUnitOfWorkService
     {
         private readonly AppDbContext db;
-        public UnitOfWorkService(AppDbContext db)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public UnitOfWorkService(
+            AppDbContext db,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
+            _userManager = userManager;
+            _roleManager = roleManager;
             Projects = new ProjectsService.ProjectsService(this.db);
             Tasks = new TasksService.TasksService(this.db);
             Comments = new CommentsService.CommentsService(this.db);
             Users = new UsersService.UsersService(this.db);
+            _roleManager = roleManager;
         }
         public ProjectsService.IProjectsService Projects { 
             get;
@@ -32,6 +42,10 @@ namespace TaskifyAPI.Services.UnitOfWorkService
         {
             get;
             private set;
+        }
+        public UserManager<ApplicationUser> getUserManager()
+        {
+            return _userManager;
         }
         public void Dispose()
         {

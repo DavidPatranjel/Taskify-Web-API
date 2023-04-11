@@ -46,7 +46,7 @@ namespace TaskifyAPI.Controllers
             return new TaskDTO(task);
         }
 
-        [HttpGet("{projid}")]
+        [HttpGet("gettasksprojects/{projid}")]
         public async Task<IActionResult> GetTasksOfProject(int projid)
         {
             var tasks = (await _unitOfWork.Tasks.GetTaskOfProject(projid)).Select(a => new TaskDTO(a)).ToList();
@@ -66,7 +66,7 @@ namespace TaskifyAPI.Controllers
             return Ok(addTaskRequest);
         }
 
-        [HttpPost("{projid}")]
+        [HttpPost("addtasksprojects/{projid}")]
         public async Task<IActionResult> AddTaskToProject(int projid, TaskDTO addTaskRequest)
         {
             var proj = await _unitOfWork.Projects.GetById(projid);

@@ -52,14 +52,11 @@ D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\n
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\TaskifyAPI.pdb
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Azure.Core.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Azure.Identity.dll
-D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Azure.Security.KeyVault.Certificates.dll
-D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Azure.Security.KeyVault.Secrets.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
-D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Identity.Web.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
@@ -130,3 +127,8 @@ D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\n
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\Faculta\An2Sem2\Softbinator\Taskify-Web-API\TaskifyAPI\TaskifyAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

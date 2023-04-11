@@ -15,12 +15,11 @@ namespace TaskifyAPI.Models.Entities
         [StringLength(200, ErrorMessage = "The project description must have at most 200 characters")]
         public string Description { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public Project(ProjectDTO pdto)
         {
             Title = pdto.Title;
             Description = pdto.Description;
-            UserId = pdto.UserId;
         }
         public Project() { }
 

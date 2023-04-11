@@ -12,7 +12,7 @@ namespace TaskifyAPI.Models.DTOs
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Please insert your Last Name"), MaxLength(100)]
         public string LastName { get; set; }
-        public string Email{ get; set; }
+        public string Email { get; set; }
 
         public ApplicationUserDTO(ApplicationUser user)
         {
