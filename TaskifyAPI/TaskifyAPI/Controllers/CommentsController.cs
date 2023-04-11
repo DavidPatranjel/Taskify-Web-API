@@ -14,22 +14,27 @@ namespace TaskifyAPI.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly IUnitOfWorkService _unitOfWork;
+        private readonly ILogger<CommentsController> _logger;
         private const string errorDbMessage = "DB Error: Cant find comment with this id";
         private const string errorDbMessage2 = "DB Error: Cant find task with this id";
 
-        public CommentsController(IUnitOfWorkService unitOfWork)
+        public CommentsController(IUnitOfWorkService unitOfWork,
+            ILogger<CommentsController> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
 
         [HttpGet("/comments/{task_id}")]
         public async Task<IActionResult> GetComments(int task_id)
         {
+            _logger.LogDebug("Running getting comments of a task...");
             var task = await _unitOfWork.Tasks.GetById(task_id);
 
             if(task == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage2);
             }
 
@@ -43,6 +48,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }
@@ -50,11 +56,13 @@ namespace TaskifyAPI.Controllers
         [HttpGet("/comm/{id}")]
         public async Task<ActionResult<CommentDTO>> GetComment(int id)
         {
+            _logger.LogDebug("Running getting a comment...");
             var comm = await _unitOfWork.Comments.GetById(id);
             
 
             if (comm == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -68,6 +76,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
 
@@ -77,9 +86,11 @@ namespace TaskifyAPI.Controllers
         [HttpPost("{taskid}")]
         public async Task<IActionResult> AddComments(int taskid, [FromBody] CommentDTO addCommentRequest)
         {
+            _logger.LogDebug("Running adding a comment...");
             var task = await _unitOfWork.Tasks.GetById(taskid);
             if(task == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage2);
             }
 
@@ -97,19 +108,21 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }
 
 
         [HttpPut("{id}")]
-
         public async Task<IActionResult> PutComment(int id, [FromBody] CommentDTO newcomm)
         {
+            _logger.LogDebug("Running updating a comment...");
             var comm = await _unitOfWork.Comments.GetById(id);
 
             if (comm == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -129,6 +142,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }
@@ -136,10 +150,12 @@ namespace TaskifyAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
+            _logger.LogDebug("Running deleting a comment...");
             var comm = await _unitOfWork.Comments.GetById(id);
 
             if (comm == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -156,6 +172,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskifyAPI.Data;
 using TaskifyAPI.Models.DTOs;
 using TaskifyAPI.Models.Entities;
@@ -15,17 +16,22 @@ namespace TaskifyAPI.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IUnitOfWorkService _unitOfWork;
+        private readonly ILogger<ProjectsController> _logger;
         private const string errorDbMessage = "DB Error: Cant find project with this id";
         private const string errorDbMessage2 = "DB Error: Cant find user with this id";
 
-        public ProjectsController(IUnitOfWorkService unitOfWork)
+        public ProjectsController(IUnitOfWorkService unitOfWork,
+                                    ILogger<ProjectsController> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetProjects()
         {
+            _logger.LogDebug("Running getting all projects of a user...");
             var user_id = _unitOfWork.getUserManager().GetUserId(User);
             var listprojs = (await _unitOfWork.UserProjects.GetProjectsOfUser(user_id));
             var projects = (await _unitOfWork.Projects.GetAll()).Where(proj => listprojs.Contains(proj.Id)).Select(a => new ProjectDTO(a)).ToList();
@@ -37,6 +43,7 @@ namespace TaskifyAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetProjectsAdmin()
         {
+            _logger.LogDebug("Running getting all projects (ADMIN ONLY)...");
             var projects = (await _unitOfWork.Projects.GetAll()).Select(a => new ProjectDTO(a)).ToList();
             return Ok(projects);
         }
@@ -46,10 +53,12 @@ namespace TaskifyAPI.Controllers
 
         public async Task<ActionResult<ProjectDTO>> GetProject(int id)
         {
+            _logger.LogDebug("Running getting a project...");
             var proj = await _unitOfWork.Projects.GetById(id);
 
             if (proj == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -60,6 +69,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
 
@@ -68,11 +78,13 @@ namespace TaskifyAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProject(ProjectDTO addProjectRequest)
         {
+            _logger.LogDebug("Running adding a project...");
             Project p = new Project(addProjectRequest);
             var user_id = _unitOfWork.getUserManager().GetUserId(User);
             p.UserId = user_id;
             await _unitOfWork.Projects.Create(p);
             _unitOfWork.Save();
+            _logger.LogInformation("Adding project to DB...");
 
 
             UserProject userProject = new UserProject();
@@ -81,6 +93,7 @@ namespace TaskifyAPI.Controllers
 
             await _unitOfWork.UserProjects.Create(userProject);
             _unitOfWork.Save();
+            _logger.LogInformation("Adding team to DB...");
 
             return Ok(addProjectRequest);
         }
@@ -91,16 +104,18 @@ namespace TaskifyAPI.Controllers
 
         public async Task<ActionResult<UserProject>> AddUsersInProject([FromBody] UserProject uspr)
         {
-
+            _logger.LogDebug("Running adding a user in the project team...");
             var proj = await _unitOfWork.Projects.GetById(uspr.ProjectId);
             var usr = await _unitOfWork.Users.GetById(uspr.UserId);
 
             if (proj == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
             if (usr == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage2);
             }
 
@@ -120,6 +135,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
             
@@ -129,11 +145,13 @@ namespace TaskifyAPI.Controllers
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> PutProject(int id, [FromBody] ProjectDTO newproj)
         {
+            _logger.LogDebug("Running updating a project...");
             var user_id = _unitOfWork.getUserManager().GetUserId(User);
             var project = await _unitOfWork.Projects.GetById(id);
 
             if (project == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -149,6 +167,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }
@@ -156,12 +175,14 @@ namespace TaskifyAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
+            _logger.LogDebug("Running deleting a project...");
             var proj = await _unitOfWork.Projects.GetById(id);
             var user_id = _unitOfWork.getUserManager().GetUserId(User);
 
 
             if (proj == null)
             {
+                _logger.LogError("DB Error!");
                 return NotFound(errorDbMessage);
             }
 
@@ -193,6 +214,7 @@ namespace TaskifyAPI.Controllers
             }
             else
             {
+                _logger.LogWarning("Unauthorized access");
                 return Unauthorized();
             }
         }
