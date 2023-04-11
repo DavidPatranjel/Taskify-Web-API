@@ -11,6 +11,7 @@ namespace TaskifyAPI.Services.UnitOfWorkService
         TasksService.ITasksService Tasks{ get; }
         CommentsService.ICommentsService Comments{ get; }
         UsersService.IUsersService Users{ get; }
+        UserProjectService.IUserProjectService UserProjects { get; }
         UserManager<ApplicationUser> getUserManager();
         int Save();
     }

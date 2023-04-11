@@ -65,7 +65,7 @@ namespace TaskifyAPI.Controllers
                 var result = await _signInManager.PasswordSignInAsync(
                     logindto.Email, logindto.Password, false, false);
 
-                if (!result.Succeeded)
+                if (!result.Succeeded || User.Identity.IsAuthenticated)
                 {
                     return Unauthorized(logindto);
                 }

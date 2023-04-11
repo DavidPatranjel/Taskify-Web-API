@@ -9,7 +9,6 @@ namespace TaskifyAPI.Models.DTOs
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Please insert your Password"), MinLength(8)]
         public string Password { get; set; }
     }
     public class AccountUserDTO : LoginUserDTO

@@ -5,7 +5,19 @@ using TaskifyAPI.Models.Entities;
 
 namespace TaskifyAPI.Models.DTOs
 {
-    public class TaskDTO
+    public class TaskStatusDTO
+    {
+        public enum TaskStatus
+        {
+            NotStarted,
+            InProgress,
+            Completed
+        }
+
+        public TaskStatus Status { get; set; } /*Not Started, In Progress, Completed*/
+
+    }
+    public class TaskDTO : TaskStatusDTO
     {
         
         [Required(ErrorMessage = "Please insert the task title")]
@@ -13,19 +25,11 @@ namespace TaskifyAPI.Models.DTOs
         [Required(ErrorMessage = "Please insert the description of this task")]
         [StringLength(200, ErrorMessage = "The task description must have at most 200 characters")]
         public string Description { get; set; }
-        public TaskStatus Status { get; set; } /*Not Started, In Progress, Completed*/
 
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-
-        public enum TaskStatus
-        {
-            NotStarted, 
-            InProgress,
-            Completed
-        }
 
         public TaskDTO(Models.Entities.Task task)
         {
